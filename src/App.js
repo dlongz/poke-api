@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
 
 function App() {
@@ -6,10 +7,16 @@ function App() {
   const [pokemon, setPokemon] = useState([]);
 
   useEffect(() => {
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=2000')
-        .then(response => response.json())
-        .then(response => setPokemon(response.results))
-  })
+    axios.get('https://pokeapi.co/api/v2/pokemon?limit=2000')
+        // .then(response => response.json()) // Remove pasrsing of Json
+        .then(response => {
+          console.log(response)
+          console.log(response.data)
+          console.log(response.data.results)
+          console.log(response.data.results[0].name)
+          setPokemon(response.data.results)
+        }) // Change results to data
+  }, [])
 
   return (
     <div className="App">
